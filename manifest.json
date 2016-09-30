@@ -1,26 +1,28 @@
-﻿{
-  "name": "Hebrew Tooltip Translation for Google Chrome™",
-  "version": "2.6",
-  "manifest_version": 2,
-  "description": "Translate Hebrew to English and vice-versa via tooltip",
-  "permissions": [
-    "http://www.morfix.co.il/*"
-  ],
-  "icons": {
-    "16": "HTT-16.png",
-    "48": "HTT-48.png",
-    "128": "HTT-128.png"
-  },
-  "background" : {
-    "scripts": ["HTT-background.js"],
-    "persistent": true
-  },
-  "options_page": "HTT-options.html",
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "css": ["htt.css"],
-      "js" : ["HTT-contentscript.js"]
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "name": "Hebrew Tooltip Translation for Google Chrome™",
+    "version": "2.6",
+    "manifest_version": 2,
+    "description": "Translate Hebrew to English and vice-versa via tooltip",
+    "permissions": ["http://www.morfix.co.il/*"],
+    "icons": {
+        "16": "HTT-16.png",
+        "48": "HTT-48.png",
+        "128": "HTT-128.png"
+    },
+    "background": {
+        "scripts": ["HTT-background.js"],
+        "persistent": true
+    },
+    "options_page": "HTT-options.html",
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "css": ["htt.css"],
+        "js": ["HTT-contentscript.js"]
+    }],
+    "applications": {
+        "gecko": {
+            "id": "mhbjoppmeodjnkmbekpmfgicgiaecblm@chrome-store"
+        }
     }
-  ]
 }

@@ -8,6 +8,45 @@
   var HTTdefinitions = ""; //translation output
   var HTToptions;
 
+  
+  function xhr(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(data) {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var data = xhr.responseText;
+		
+        callback(data);
+      } else {
+        callback(null);
+      }
+    }
+  }
+  // Note that any URL fetched here must be matched by a permission in
+  // the manifest.json file!
+  xhr.open('GET', url, true);
+  xhr.send();
+  };
+  
+  /**
+   * Handles data sent via chrome.extension.sendRequest().
+   * @param request Object Data sent in the request.
+   * @param sender Object Origin of the request.
+   * @param callback Function The method to call when the request completes.
+   */
+  function onRequest(request, callback) {
+    if (request.action == 'xhr') {
+      xhr(request.url, callback);
+    } else if(request.action == 'localStorage_set') {
+      localStorage[request.attribute] = JSON.stringify(request.value || null);
+      
+      callback();
+    } else if(request.action == 'localStorage_get') {
+      callback(JSON.parse(localStorage[request.attribute] || null) || null);
+    }
+  };
+  
+  
   //helper functions
   function appendChild(child,parent){return(parent.insertBefore(child,parent.lastChild.nextSibling));}
 
@@ -116,7 +155,7 @@
       if(HTToptions['activity_indicator']) {
         HTTtooltip.style.width = "auto";
         HTTtooltip.style.height = "auto";
-        HTTtooltip.innerHTML = "<span class='HTT HTTActivityIndicator'>HTT...</span>"
+        HTTtooltip.innerHTML = "<div class='HTT HTTActivityIndicator'></div>"
         ttX = HTTcurX;
         ttY = HTTcurY;
         if(HTToptions['align_left']) {
@@ -149,8 +188,7 @@
         HTTtooltip.style.visibility="visible";
       }
       var HTTreq;
-
-      chrome.extension.sendRequest({'action' : 'xhr', 'url' : 'http://www.morfix.co.il/' + encodeURIComponent(input)}, HTTparseResponse);
+      onRequest({'action' : 'xhr', 'url' : 'http://www.morfix.co.il/' + encodeURIComponent(input)}, HTTparseResponse);
     }
   }
 
@@ -158,6 +196,7 @@
     try {
       if(elem.nodeType == elem.TEXT_NODE) {
         var range = elem.ownerDocument.createRange();
+		
         range.selectNodeContents(elem);
         var str = range.toString();
         var currentPos = 0;
@@ -166,6 +205,9 @@
         while(currentPos < endPos) {
           range.setStart(elem, currentPos);
           range.setEnd(elem, currentPos+1);
+		  
+		  var tmp = range.getBoundingClientRect();
+		  
           if(range.getBoundingClientRect() &&
              range.getBoundingClientRect().left <= x && range.getBoundingClientRect().right  >= x &&
              range.getBoundingClientRect().top  <= y && range.getBoundingClientRect().bottom >= y) {
@@ -351,8 +393,8 @@
     return;
   }
 
-  function HTTinit () {
-    chrome.extension.sendRequest({'action' : 'localStorage_get', 'attribute' : 'options'}, HTToptions_callback);
+  function HTTinit() {
+    onRequest({'action' : 'localStorage_get', 'attribute' : 'options'}, HTToptions_callback);
     //don't continue until the callback completes
   }
 
