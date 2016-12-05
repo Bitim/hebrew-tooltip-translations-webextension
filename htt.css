@@ -1,4 +1,4 @@
-.HTTPopup { background:#f6f6f6; border:3px double #666666; }'+
+.HTTPopup { background:#f6f6f6; border:3px double #666666; }
 .HTTPopupContainer { display:none; position:absolute; top:0; right:0; bottom:0; left:0; }
 #HTTConfig { width:700px; padding:10px; margin:20px auto 0; }
 #HTTConfig label { color:#666666; font-weight:normal; }
