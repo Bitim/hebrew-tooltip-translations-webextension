@@ -109,9 +109,9 @@
          translations_e2h[i].getElementsByClassName('diber').length > 0 &&
          translations_e2h[i].getElementsByClassName('translation translation_he').length > 0) {
         var new_result = new Object;
-        new_result['word'] = translations_e2h[i].getElementsByClassName('word')[0].innerText;
-        new_result['partOfSpeech'] = translations_e2h[i].getElementsByClassName('diber')[0].innerText;
-        new_result['definition'] = translations_e2h[i].getElementsByClassName('translation translation_he')[0].innerText;
+        new_result['word'] = translations_e2h[i].getElementsByClassName('word')[0].textContent;
+        new_result['partOfSpeech'] = translations_e2h[i].getElementsByClassName('diber')[0].textContent;
+        new_result['definition'] = translations_e2h[i].getElementsByClassName('translation translation_he')[0].textContent;
         new_result['rtl'] = 0;
         rtl--;
         results.push(new_result);
@@ -124,9 +124,9 @@
          translations_h2e[i].getElementsByClassName('diber').length > 0 &&
          translations_h2e[i].getElementsByClassName('default_trans').length > 0) {
         var new_result = new Object;
-        new_result['word'] = translations_h2e[i].getElementsByClassName('word')[0].innerText;
-        new_result['partOfSpeech'] = translations_h2e[i].getElementsByClassName('diber')[0].innerText;
-        new_result['definition'] = translations_h2e[i].getElementsByClassName('default_trans')[0].innerText;
+        new_result['word'] = translations_h2e[i].getElementsByClassName('word')[0].textContent;
+        new_result['partOfSpeech'] = translations_h2e[i].getElementsByClassName('diber')[0].textContent;
+        new_result['definition'] = translations_h2e[i].getElementsByClassName('default_trans')[0].textContent;
         new_result['rtl'] = 1;
         rtl++;
         results.push(new_result);
@@ -275,7 +275,7 @@
     if(HTTtimeoutID || force) {
       HTTdefinitions = "";
       HTTtooltip.style.visibility = "hidden";
-      HTTtooltip.innerHTML = HTTdefinitions;
+      HTTtooltip.textContent = HTTdefinitions;
       HTTtooltip.style.left = 0 + "px";
       HTTtooltip.style.top = 0 + "px";
       HTTtooltip.style.width = 0 + "px";
