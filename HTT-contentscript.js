@@ -57,12 +57,10 @@
       HTTtooltip.style.width = "auto";
       HTTtooltip.style.height = "auto";
       HTTtooltip.innerHTML = HTTdefinitions;
-      HTTtooltip.firstChild.style.marginTop = "0";
-      HTTtooltip.firstChild.style.marginRight = "0";
-      HTTtooltip.firstChild.style.marginBottom = "0";
-      HTTtooltip.firstChild.style.marginLeft = "0";
+
       ttX = HTTcurX;// + window.scrollX;
       ttY = HTTcurY;// + window.scrollY;
+	  
       if(HTToptions['align_left']) {
         ttX += 10;
       } else {
@@ -98,9 +96,10 @@
     HTThide(true);
     if(responseText == null) return;  //quit if we didn't get anything
 
-    var tempDiv = document.createElement('div');
-    tempDiv.innerHTML = responseText.replace(/<script(.|\s)*?\/script>/gi, '').replace(/src="[^"]*"/gi, '');
-
+	var parser = new DOMParser();
+	var tempDiv = parser.parseFromString(responseText,"text/html");
+	
+	
     var translations_e2h = tempDiv.getElementsByClassName('translate_box_en box');
     var results = new Array();
     var rtl = 0; //count how many of each type

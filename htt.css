@@ -12,4 +12,5 @@
 .HTTPartOfSpeech { font-size:7pt; color:black; font-family:Arial; }
 .HTTDefinition { font-size:11pt; color:#000099; }
 .HTTtooltip { border: 2px solid #e1ecff; visibility: hidden; top: 0px; left: 0px; position: fixed; background-color: #F7FAFF; z-index: 10000; width: 0px; height: 0px; padding: 4px; border-radius: 5px; max-width:400px}
+.HTTtooltip  td {padding: 3px}
 .HTTActivityIndicator { background-image: url(ajax-loader.gif); height: 24px; width: 24px;}
