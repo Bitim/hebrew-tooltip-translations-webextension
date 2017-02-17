@@ -136,12 +136,12 @@
     if(results.length > 0) {
       var rtl = (rtl > 0); //map to either 0 or 1
       HTTdefinitions = "";
-      HTTdefinitions += "<table class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "' dir=\"\"><tbody class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "' dir=\"\">\n";
+      HTTdefinitions += "<table class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "'><tbody class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "'>\n";
       for(var i = 0; i < results.length; i++) {
         HTTdefinitions += "<tr class='HTT'>";
-        HTTdefinitions += "<td class='HTT HTTWord " + (results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].word + "</td>\n";
-        HTTdefinitions += "<td class='HTT HTTPartOfSpeech " + (results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].partOfSpeech + "</td>\n";
-        HTTdefinitions += "<td class='HTT HTTDefinition " + (!results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].definition + "</td>";
+        HTTdefinitions += "<td class='HTT HTTWord' dir='auto'>" + results[i].word + "</td>\n";
+        HTTdefinitions += "<td class='HTT HTTPartOfSpeech' dir='auto'>" + results[i].partOfSpeech + "</td>\n";
+        HTTdefinitions += "<td class='HTT HTTDefinition " + (!results[i].rtl?"HTTHebrew":"HTTEnglish") + "' dir='auto'>" + results[i].definition + "</td>";
         HTTdefinitions += "</tr>\n";
       }
       HTTdefinitions += "</tbody></table>";
