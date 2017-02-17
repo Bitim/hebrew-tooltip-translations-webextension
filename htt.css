@@ -8,9 +8,9 @@
 .HTTImportant { font-weight:bold; }
 .HTTHebrew { direction:rtl; text-align:right; font-family:David; }
 .HTTEnglish { direction:ltr; text-align:left; font-family:Arial; }
-.HTTWord { font-size:11pt; color:#000099; }
-.HTTPartOfSpeech { font-size:7pt; color:black; font-family:Arial; }
+.HTTWord { font-size:11pt; color:#000099; text-align: match-parent; }
+.HTTPartOfSpeech { font-size:7pt; color:black; font-family:Arial; text-align: match-parent;}
 .HTTDefinition { font-size:11pt; color:#000099; }
 .HTTtooltip { border: 2px solid #e1ecff; visibility: hidden; top: 0px; left: 0px; position: fixed; background-color: #F7FAFF; z-index: 10000; width: 0px; height: 0px; padding: 4px; border-radius: 5px; max-width:400px}
-.HTTtooltip  td {padding: 3px}
+.HTTtooltip  td {padding: 3px; vertical-align:top}
 .HTTActivityIndicator { background-image: url(ajax-loader.gif); height: 24px; width: 24px;}
