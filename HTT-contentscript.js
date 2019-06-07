@@ -10,11 +10,11 @@
 
   
   function xhr(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function(data) {
-    if (xhr.readyState == 4) {
-      if (xhr.status == 200) {
-        var data = xhr.responseText;
+  var _xhr = new XMLHttpRequest();
+  _xhr.onreadystatechange = function(data) {
+    if (_xhr.readyState == 4) {
+      if (_xhr.status == 200) {
+        var data = _xhr.responseText;
 		
         callback(data);
       } else {
@@ -24,8 +24,8 @@
   }
   // Note that any URL fetched here must be matched by a permission in
   // the manifest.json file!
-  xhr.open('GET', url, true);
-  xhr.send();
+  _xhr.open('GET', url, true);
+  _xhr.send();
   };
   
   /**
@@ -57,10 +57,12 @@
       HTTtooltip.style.width = "auto";
       HTTtooltip.style.height = "auto";
       HTTtooltip.innerHTML = HTTdefinitions;
-
+      HTTtooltip.firstChild.style.marginTop = "0";
+      HTTtooltip.firstChild.style.marginRight = "0";
+      HTTtooltip.firstChild.style.marginBottom = "0";
+      HTTtooltip.firstChild.style.marginLeft = "0";
       ttX = HTTcurX;// + window.scrollX;
       ttY = HTTcurY;// + window.scrollY;
-	  
       if(HTToptions['align_left']) {
         ttX += 10;
       } else {
@@ -96,36 +98,35 @@
     HTThide(true);
     if(responseText == null) return;  //quit if we didn't get anything
 
-	var parser = new DOMParser();
-	var tempDiv = parser.parseFromString(responseText,"text/html");
-	
-	
-    var translations_e2h = tempDiv.getElementsByClassName('translate_box_en box');
+    var tempDiv = document.createElement('div');
+    tempDiv.innerHTML = responseText.replace(/<script(.|\s)*?\/script>/gi, '').replace(/src="[^"]*"/gi, '');
+
+    var translations_e2h = tempDiv.getElementsByClassName('Translation_content_enTohe');
     var results = new Array();
     var rtl = 0; //count how many of each type
     for(var i = 0; i < translations_e2h.length; i++) {
-      if(translations_e2h[i].getElementsByClassName('word').length > 0 &&
-         translations_e2h[i].getElementsByClassName('diber').length > 0 &&
-         translations_e2h[i].getElementsByClassName('translation translation_he').length > 0) {
+      if(translations_e2h[i].getElementsByClassName('Translation_spTop_enTohe').length > 0 &&
+         translations_e2h[i].getElementsByClassName('Translation_sp2Top_enTohe').length > 0 &&
+         translations_e2h[i].getElementsByClassName('normal_translation_div').length > 0) {
         var new_result = new Object;
-        new_result['word'] = translations_e2h[i].getElementsByClassName('word')[0].textContent;
-        new_result['partOfSpeech'] = translations_e2h[i].getElementsByClassName('diber')[0].textContent;
-        new_result['definition'] = translations_e2h[i].getElementsByClassName('translation translation_he')[0].textContent;
+        new_result['word'] = translations_e2h[i].getElementsByClassName('Translation_spTop_enTohe')[0].innerText;
+        new_result['partOfSpeech'] = translations_e2h[i].getElementsByClassName('Translation_sp2Top_enTohe')[0].innerText;
+        new_result['definition'] = translations_e2h[i].getElementsByClassName('normal_translation_div')[0].innerText;
         new_result['rtl'] = 0;
         rtl--;
         results.push(new_result);
       }
     }
 
-    var translations_h2e = tempDiv.getElementsByClassName('translate_box');
+    var translations_h2e = tempDiv.getElementsByClassName('Translation_content_heToen');
     for(var i = 0; i < translations_h2e.length; i++) {
-      if(translations_h2e[i].getElementsByClassName('word').length > 0 &&
-         translations_h2e[i].getElementsByClassName('diber').length > 0 &&
-         translations_h2e[i].getElementsByClassName('default_trans').length > 0) {
+      if(translations_h2e[i].getElementsByClassName('Translation_spTop_heToen').length > 0 &&
+         translations_h2e[i].getElementsByClassName('Translation_sp2Top_heToen').length > 0 &&
+         translations_h2e[i].getElementsByClassName('normal_translation_div').length > 0) {
         var new_result = new Object;
-        new_result['word'] = translations_h2e[i].getElementsByClassName('word')[0].textContent;
-        new_result['partOfSpeech'] = translations_h2e[i].getElementsByClassName('diber')[0].textContent;
-        new_result['definition'] = translations_h2e[i].getElementsByClassName('default_trans')[0].textContent;
+        new_result['word'] = translations_h2e[i].getElementsByClassName('Translation_spTop_heToen')[0].innerText;
+        new_result['partOfSpeech'] = translations_h2e[i].getElementsByClassName('Translation_sp2Top_heToen')[0].innerText;
+        new_result['definition'] = translations_h2e[i].getElementsByClassName('normal_translation_div')[0].innerText;
         new_result['rtl'] = 1;
         rtl++;
         results.push(new_result);
@@ -136,12 +137,12 @@
     if(results.length > 0) {
       var rtl = (rtl > 0); //map to either 0 or 1
       HTTdefinitions = "";
-      HTTdefinitions += "<table class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "'><tbody class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "'>\n";
+      HTTdefinitions += "<table class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "' dir=\"\"><tbody class='HTT " + (rtl?"HTTHebrew":"HTTEnglish") + "' dir=\"\">\n";
       for(var i = 0; i < results.length; i++) {
         HTTdefinitions += "<tr class='HTT'>";
-        HTTdefinitions += "<td class='HTT HTTWord' dir='auto'>" + results[i].word + "</td>\n";
-        HTTdefinitions += "<td class='HTT HTTPartOfSpeech' dir='auto'>" + results[i].partOfSpeech + "</td>\n";
-        HTTdefinitions += "<td class='HTT HTTDefinition " + (!results[i].rtl?"HTTHebrew":"HTTEnglish") + "' dir='auto'>" + results[i].definition + "</td>";
+        HTTdefinitions += "<td class='HTT HTTWord " + (results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].word + "</td>\n";
+        HTTdefinitions += "<td class='HTT HTTPartOfSpeech " + (results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].partOfSpeech + "</td>\n";
+        HTTdefinitions += "<td class='HTT HTTDefinition " + (!results[i].rtl?"HTTHebrew":"HTTEnglish") + "'>" + results[i].definition + "</td>";
         HTTdefinitions += "</tr>\n";
       }
       HTTdefinitions += "</tbody></table>";
@@ -187,7 +188,7 @@
         HTTtooltip.style.visibility="visible";
       }
       var HTTreq;
-      onRequest({'action' : 'xhr', 'url' : 'http://www.morfix.co.il/' + encodeURIComponent(input)}, HTTparseResponse);
+      onRequest({'action' : 'xhr', 'url' : 'https://www.morfix.co.il/' + encodeURIComponent(input)}, HTTparseResponse);
     }
   }
 
@@ -274,7 +275,7 @@
     if(HTTtimeoutID || force) {
       HTTdefinitions = "";
       HTTtooltip.style.visibility = "hidden";
-      HTTtooltip.textContent = HTTdefinitions;
+      HTTtooltip.innerHTML = HTTdefinitions;
       HTTtooltip.style.left = 0 + "px";
       HTTtooltip.style.top = 0 + "px";
       HTTtooltip.style.width = 0 + "px";
