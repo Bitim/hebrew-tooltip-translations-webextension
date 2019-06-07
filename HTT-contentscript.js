@@ -275,7 +275,7 @@
     if(HTTtimeoutID || force) {
       HTTdefinitions = "";
       HTTtooltip.style.visibility = "hidden";
-      HTTtooltip.innerHTML = HTTdefinitions;
+      HTTtooltip.textContent = HTTdefinitions;
       HTTtooltip.style.left = 0 + "px";
       HTTtooltip.style.top = 0 + "px";
       HTTtooltip.style.width = 0 + "px";
