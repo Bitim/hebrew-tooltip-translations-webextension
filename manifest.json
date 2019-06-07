@@ -1,6 +1,6 @@
 {
     "name": "Hebrew Tooltip Translation",
-    "version": "3.0",
+    "version": "3.0.1",
     "manifest_version": 2,
     "description": "Translate Hebrew to English and vice-versa via tooltip",
     "permissions": ["https://www.morfix.co.il/*"],
