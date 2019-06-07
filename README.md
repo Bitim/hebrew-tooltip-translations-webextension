@@ -8,5 +8,8 @@ Based on [eyal0](https://github.com/eyal0)'s [hebrew-tooltip-translations-for-ch
 -Version 3.0
 Bug fixes.
 
+## Installation
+[Firefox Add-ons web site](https://addons.mozilla.org/en-US/firefox/addon/hebrew-tooltip-translation/).
+
 ## License
 This is free and unencumbered software released into the public domain.
