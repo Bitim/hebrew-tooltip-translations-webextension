@@ -13,7 +13,7 @@
         "page": "HTT-options.html"
     },
     "content_scripts": [{
-        "matches": ["https://*/*"],
+        "matches": ["http://*/*", "https://*/*"],
         "css": ["htt.css"],
         "js": ["HTT-contentscript.js"]
     }],
